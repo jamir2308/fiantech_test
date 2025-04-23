@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Button from "./Button";
 import { ProductCardProps } from "@/types/componetsProps";
+import Image from "next/image";
 
 const getCategoryChipClasses = (category: string): string => {
   switch (category.toLowerCase()) {
@@ -23,13 +24,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <div className="border border-gray-200 rounded-lg shadow-sm overflow-hidden flex flex-col h-full bg-white transition-shadow duration-200 hover:shadow-md">
-      {/* Optional Image */}
       {product.imageUrl && (
         <div className="h-40 bg-gray-100 flex items-center justify-center">
-          <img
+          <Image
             src={product.imageUrl}
             alt={`Imagen de ${product.name}`}
             className="w-full h-full object-cover"
+            width={400}
+            height={400}
           />
         </div>
       )}

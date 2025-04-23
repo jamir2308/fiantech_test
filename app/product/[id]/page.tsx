@@ -4,19 +4,17 @@ import { getProductById, mockProducts } from '@/data/mockProducts';
 import { notFound } from 'next/navigation';
 import Button from '@/components/Button';
 import ChartPlaceholder from '@/components/ChartPlaceholder';
+import Image from 'next/image';
 
-interface ProductDetailPageProps {
-  params: { id: string };
+type ParamPromise = Promise<{ id: string }>;
+
+export function generateStaticParams() {
+  return mockProducts.map((p) => ({ id: p.id }));
 }
 
-export async function generateStaticParams() {
-  return mockProducts.map((product) => ({
-    id: product.id,
-  }));
-}
-
-export async function generateMetadata({ params }: ProductDetailPageProps) {
-  const product = getProductById(params.id);
+export async function generateMetadata({ params }: {params: ParamPromise}) {
+  const { id } = await params;
+  const product = getProductById(id);
   if (!product) {
     return { title: 'Producto no encontrado' };
   }
@@ -27,8 +25,13 @@ export async function generateMetadata({ params }: ProductDetailPageProps) {
 }
 
 
-export default function ProductDetailPage({ params }: ProductDetailPageProps) {
-  const product = getProductById(params.id);
+export default async function ProductDetailPage({
+  params,
+}: {
+  params: ParamPromise;
+}) {
+  const { id } = await params;
+  const product = getProductById(id);
 
   if (!product) {
     notFound();
@@ -50,7 +53,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
            <div>
              {product.imageUrl && (
               <div className="mb-6 rounded-lg overflow-hidden border border-gray-200">
-                 <img src={product.imageUrl} alt={`Imagen de ${product.name}`} className="w-full h-auto object-cover" />
+                 <Image src={product.imageUrl} alt={`Imagen de ${product.name}`} width={500} height={500} className="w-full h-auto object-cover" />
                </div>
              )}
              <span className="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded mb-2">
