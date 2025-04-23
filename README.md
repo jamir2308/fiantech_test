@@ -1,4 +1,4 @@
-# FinanTech - Showcase de Productos Financieros
+# FinanTech - Landing page de Productos Financieros
 
 Este proyecto es una aplicación web desarrollada con Next.js para mostrar diferentes productos financieros (cuentas, tarjetas, fondos, seguros) de una manera clara y organizada. Permite a los usuarios ver detalles de los productos y filtrarlos por categoría.
 
